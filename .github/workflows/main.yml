@@ -1,0 +1,33 @@
+name: Build wheel
+
+on:
+  pull_request:
+  push:
+    branches:
+      - master
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      id: py
+      with:
+        python-version: '3.11'
+        cache: pip
+
+    - name: Build package
+      run: pipx run --python '${{ steps.py.outputs.python-path }}' build -w
+
+    - name: Upload package wheel
+      uses: actions/upload-artifact@v3
+      with:
+        path: dist/*
