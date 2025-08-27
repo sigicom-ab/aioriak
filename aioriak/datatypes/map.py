@@ -1,6 +1,6 @@
 from .datatype import Datatype
 from . import TYPES
-from collections import Mapping
+from collections.abc import Mapping
 from riak.util import lazy_property
 
 
@@ -78,7 +78,7 @@ class Map(Mapping, Datatype):
         del map[('emails', 'set')]
 
     Convenience accessors exist that partition the map's keys by
-    datatype and implement the collections.Mapping
+    datatype and implement the collections.abc.Mapping
     behavior as well as supporting deletion::
 
         map.sets['emails']
@@ -152,7 +152,7 @@ class Map(Mapping, Datatype):
         self._check_key(key)
         return (key in self._value) or (key in self._updates)
 
-    # collections.Mapping API
+    # collections.abc.Mapping API
     def __getitem__(self, key):
         '''
         Fetches a convergent datatype at the given key.
