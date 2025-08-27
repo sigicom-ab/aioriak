@@ -1,9 +1,9 @@
-import collections
+import collections.abc
 from aioriak.datatypes.datatype import Datatype
 from aioriak.datatypes import TYPES
 
 
-class Set(collections.Set, Datatype):
+class Set(collections.abc.Set, Datatype):
     '''A convergent datatype representing a Set with observed-remove
     semantics. Currently strings are the only supported value type.
 
@@ -16,7 +16,7 @@ class Set(collections.Set, Datatype):
         myset.discard('barista')
 
     This datatype also implements the `Set ABC
-    <https://docs.python.org/2/library/collections.html>`_, meaning it
+    <https://docs.python.org/3.13/library/collections.abc.html#collections.abc.Set>`_, meaning it
     supports ``len()``, ``in``, and iteration.
     '''
     type_name = 'set'
@@ -79,7 +79,7 @@ class Set(collections.Set, Datatype):
         '''
         return len(self._removes | self._adds) > 0
 
-    # collections.Set API, operates only on the immutable version
+    # collections.abc.Set API, operates only on the immutable version
     def __contains__(self, element):
         return element in self.value
 
@@ -93,7 +93,7 @@ class Set(collections.Set, Datatype):
         return frozenset(new_value)
 
     def _check_type(self, new_value):
-        if not isinstance(new_value, collections.Iterable):
+        if not isinstance(new_value, collections.abc.Iterable):
             return False
         for element in new_value:
             if not isinstance(element, str):
