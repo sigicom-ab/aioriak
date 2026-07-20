@@ -28,6 +28,6 @@ jobs:
       run: pipx run --python '${{ steps.py.outputs.python-path }}' build -w
 
     - name: Upload package wheel
-      uses: actions/upload-artifact@v6
+      uses: actions/upload-artifact@v7
       with:
         path: dist/*
